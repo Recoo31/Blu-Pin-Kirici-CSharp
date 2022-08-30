@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32819.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blu-Tv-Pin", "Blu-Tv-Pin.csproj", "{4597EE76-127B-4ADE-A217-15345B7A1291}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4597EE76-127B-4ADE-A217-15345B7A1291}.Debug|Any CPU.ActiveCfg = Release|Any CPU
+		{4597EE76-127B-4ADE-A217-15345B7A1291}.Debug|Any CPU.Build.0 = Release|Any CPU
+		{4597EE76-127B-4ADE-A217-15345B7A1291}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4597EE76-127B-4ADE-A217-15345B7A1291}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {735CB12D-6818-4E64-BFBC-9F8F58DA14FA}
+	EndGlobalSection
+EndGlobal
