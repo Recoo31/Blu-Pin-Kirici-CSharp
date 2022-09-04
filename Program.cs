@@ -185,6 +185,10 @@ namespace Recoo
                             result.Status = Status.Bad;
                         }
                     }
+                    else
+                    {
+                        Console.WriteLine("Error");
+                    }
                     return result; // Sonucu döndür //
                 });
 
