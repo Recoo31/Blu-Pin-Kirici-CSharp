@@ -3,4 +3,4 @@ Derlemek için bunu indirmelisin;
 
 
 Derlemeden kullanmak için;
-```https://github.com/Recoo31/Blu-Pin-Kirici-CSharp/releases/download/Release/Blu-Tv-Pin.7z```
+```https://github.com/Recoo31/Blu-Pin-Kirici-CSharp/releases/download/Release/Blu-Pin.7z```
