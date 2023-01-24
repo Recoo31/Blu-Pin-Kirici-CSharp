@@ -7,6 +7,7 @@ using RuriLib.Http.Models;
 using System.Text;
 using Parsing;
 using Result1;
+using System.Text.RegularExpressions;
 
 namespace Recoo
 {
@@ -172,7 +173,7 @@ namespace Recoo
                 profilid = profileid[Convert.ToInt32(profi)];
                 
                 
-                Console.WriteLine("Pin Kırma Işlemi Başlıyor | .gg/Xd8VfYPHB3 "); // Hesap Doğru ise çalışacak kodlar //
+                Console.WriteLine("Pin Kırma Işlemi Başladı | discord.gg/grTWvQZ44x "); // Hesap Doğru ise çalışacak kodlar //
                 string access = LRParser.ParseBetween(content, "{\"accessToken\":\"", "\",\"refreshToken\":\"").FirstOrDefault(); // Parse accesstoken //
                 Func<string, CancellationToken, Task<Result>> parityCheck = new(async (number, token) => // Thread Function'u
                 {
